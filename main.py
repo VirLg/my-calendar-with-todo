@@ -1,3 +1,5 @@
+from tkinter import *
+from tkinter import ttk
 import tkinter as tk
 import customtkinter
 import sqlite3
@@ -15,6 +17,14 @@ def dbStart ():
     conn  = sqlite3.connect('notes.db')
     cur = conn.cursor()
     cur.execute("""CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY, note TEXT, complited BOOLEAN)""")
+
+def createdTodo():
+    note=todoLableAria.get()
+    cur.execute("INSERT INTO notes(note) VALUES(?)", (note,))
+    conn.commit()
+    updateTodoList()
+    todoLableAria.delete(0, customtkinter.END)
+
 
 def updateTodoList():
     todoList.delete(0,customtkinter.END)
@@ -57,3 +67,6 @@ dbStart()
 updateTodoList()
 root.mainloop()
 conn.close()
+
+
+
